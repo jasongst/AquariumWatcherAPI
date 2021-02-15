@@ -1,3 +1,7 @@
+#config db
+app/config/db.config.js
+app/config/auth.config.js
+
 # Logs
 logs
 *.log
