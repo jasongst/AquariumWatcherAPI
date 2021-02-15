@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync({force: true}).then(() => {
   console.log('DB is synchronized');
 });
 
