@@ -26,5 +26,20 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
+db.aquarium = require("../models/aquarium.model.js")(sequelize, Sequelize);
+db.sensor = require("../models/sensor.model.js")(sequelize, Sequelize);
+
+db.aquarium.belongsTo(db.sensor);
+
+db.aquarium.belongsToMany(db.user, {
+    through: "user_aquariums",
+    foreignKey: "aquarium_id",
+    otherKey: "user_id"
+});
+db.user.belongsToMany(db.aquarium, {
+    through: "user_aquariums",
+    foreignKey: "user_id",
+    otherKey: "aquarium_id"
+});
 
 module.exports = db;
