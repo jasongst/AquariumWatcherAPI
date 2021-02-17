@@ -12,8 +12,7 @@ exports.create = (req, res) => {
         max_ph: req.body.max_ph ? req.body.max_ph : 8.6,
         min_ph: req.body.min_ph ? req.body.min_ph : 7.9,
         max_kh: req.body.max_kh ? req.body.max_kh : 12,
-        min_kh: req.body.min_kh ? req.body.min_kh : 5,
-        id_sensor: req.body.id_sensor ? req.body.id_sensor : null
+        min_kh: req.body.min_kh ? req.body.min_kh : 5
     };
 
   // Save Aquarium in the database
@@ -97,7 +96,6 @@ exports.deleteAll = (req, res) => {
         user.getAquariums().then(aquariums => {
             aquariums.forEach(aquarium => {
                 aquarium.destroy();
-                console.log("test");
             });
             user.removeAquariums();
         }).then(data => {

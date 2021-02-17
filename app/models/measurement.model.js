@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Sensor = sequelize.define("sensors", {
+    const Measurement = sequelize.define("measurements", {
         measure_temperature: {
             type: Sequelize.INTEGER
         },
@@ -26,5 +26,5 @@ module.exports = (sequelize, Sequelize) => {
         }
     }, {underscored: true});
   
-    return Sensor;
+    return Measurement;
   };

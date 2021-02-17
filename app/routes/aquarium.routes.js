@@ -1,6 +1,7 @@
 const authJwt = require("../middleware/authJwt");
 const verifyOwnerAquarium = require("../middleware/verifyOwnerAquarium");
 const aquariums = require("../controllers/aquarium.controller");
+const measurements = require("../controllers/measurement.controller");
 
 module.exports = app => {
     app.use(function(req, res, next) {
@@ -28,4 +29,13 @@ module.exports = app => {
   
     // Delete all aquariums
     app.delete("/api/aquariums", [authJwt.verifyToken], aquariums.deleteAll);
+
+    // Retrieve measurements from a single aquarium with id
+    app.get("/api/aquariums/:id/measurements", [authJwt.verifyToken, verifyOwnerAquarium], measurements.findOne);
+
+    // Retrieve measurements from a single aquarium with id
+    app.post("/api/aquariums/:id/measurements", [authJwt.verifyToken, verifyOwnerAquarium], measurements.create);
+
+    // Delete all measurements of an aquarium with id
+    app.delete("/api/aquariums/:id/measurements", [authJwt.verifyToken, verifyOwnerAquarium], measurements.deleteAll);
   };

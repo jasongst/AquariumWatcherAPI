@@ -27,9 +27,11 @@ db.sequelize = sequelize;
 
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.aquarium = require("../models/aquarium.model.js")(sequelize, Sequelize);
-db.sensor = require("../models/sensor.model.js")(sequelize, Sequelize);
+db.measurement = require("../models/measurement.model.js")(sequelize, Sequelize);
 
-db.aquarium.belongsTo(db.sensor);
+db.aquarium.hasMany(db.measurement, {
+    foreignKey: 'aquarium_id'
+});
 
 db.aquarium.belongsToMany(db.user, {
     through: "user_aquariums",
