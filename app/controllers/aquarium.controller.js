@@ -1,6 +1,8 @@
+const { measurement } = require("../models");
 const db = require("../models");
 const Aquarium = db.aquarium;
 const User = db.user;
+const Measurement = db.measurement;
 
 // Create and Save a new Aquarium
 exports.create = (req, res) => {
@@ -32,7 +34,19 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     User.findByPk(req.userId).then(user => {
         user.getAquariums().then(data => {
-            res.send(data);
+            const liste = [];
+            let cpt = 0;
+            data.forEach(aquarium => {
+                Measurement.findOne({
+                    where: {aquarium_id: aquarium.id},
+                    order: [['createdAt', 'DESC']]
+                }).then(measure => {
+                    if(measure) liste.push(measure);
+                    else liste.push(null);
+                    cpt++;
+                    if(cpt === data.length) res.send({data: data, measure: liste});
+                });
+            });
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occurred while retrieving aquarium."
